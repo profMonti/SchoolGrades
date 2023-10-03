@@ -885,7 +885,7 @@
             btnTemporary.Name = "btnTemporary";
             btnTemporary.Size = new System.Drawing.Size(91, 54);
             btnTemporary.TabIndex = 164;
-            btnTemporary.Text = "Test";
+            btnTemporary.Text = "Prova";
             toolTip1.SetToolTip(btnTemporary, "Bottone per test, visibile solo quando in debug");
             btnTemporary.UseVisualStyleBackColor = false;
             btnTemporary.Click += btnTemporary_Click;
