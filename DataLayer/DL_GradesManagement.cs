@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
-using System.Text;
 
 namespace SchoolGrades
 {
@@ -156,7 +155,7 @@ namespace SchoolGrades
         }
         internal Student GetWeightedAveragesOfStudent(Student Student, string stringKey1, string stringKey2, DateTime value1, DateTime value2)
         {
-            
+
             //List<StudentAndGrade> l = new List<StudentAndGrade>(); 
 
             //using (DbConnection conn = Connect())
@@ -214,7 +213,7 @@ namespace SchoolGrades
                 " WHERE Classes_Students.idClass =" + Class.IdClass +
                 " AND (Grades.idSchoolYear='" + Class.SchoolYear + "'" +
                 " OR Grades.idSchoolYear='" + Class.SchoolYear.Replace("-", "") + "'" +
-                " )" + 
+                " )" +
                 " AND Grades.idGradeType = '" + IdGradeType + "'" +
                 " AND Grades.idSchoolSubject = '" + IdSchoolSubject + "'" +
                 " AND Grades.Value > 0" +
@@ -465,7 +464,7 @@ namespace SchoolGrades
             //g.DummyInt = (int)Row["dummyInt"]; 
             return g;
         }
-        internal DataTable GetGradesOfStudent(Student Student, string SchoolYear, string IdGradeType, string IdSchoolSubject,DateTime DateFrom, DateTime DateTo)
+        internal DataTable GetGradesOfStudent(Student Student, string SchoolYear, string IdGradeType, string IdSchoolSubject, DateTime DateFrom, DateTime DateTo)
         {
             DataTable t;
             using (DbConnection conn = Connect())
@@ -484,7 +483,7 @@ namespace SchoolGrades
                 " WHERE Students.idStudent=" + Student.IdStudent +
                 " AND (Grades.idSchoolYear='" + SchoolYear + "'" +
                 " OR Grades.idSchoolYear='" + SchoolYear.Replace("-", "") + "'" +
-                ")" + 
+                ")" +
                 " AND Grades.idGradeType='" + IdGradeType + "'" +
                 " AND Grades.idSchoolSubject='" + IdSchoolSubject + "'" +
                 " AND Grades.Value > 0" +
@@ -521,7 +520,7 @@ namespace SchoolGrades
                 " WHERE Classes_Students.idClass =" + Class.IdClass +
                 " AND (Grades.idSchoolYear='" + Class.SchoolYear + "'" +
                 " OR Grades.idSchoolYear='" + Class.SchoolYear.Replace("-", "") + "'" + // TEMPORARY line for compatibility
-                ")" + 
+                ")" +
                 " AND (Grades.idGradeType='" + IdGradeType + "'" +
                 " OR Grades.idGradeType IS NULL)" +
                 " AND Grades.idSchoolSubject='" + IdSchoolSubject + "'" +
@@ -552,28 +551,28 @@ namespace SchoolGrades
                 DataAdapter dAdapt;
                 DataSet dSet = new DataSet();
 
-                    string query = "SELECT Grades.idGrade, Students.idStudent,lastName,firstName," +
-                " SUM(Grades.value * Grades.weight)/SUM(Grades.weight) AS 'Weighted average'" +
-                // weighted RMS (Root Mean Square) as defined here: 
-                // https://stackoverflow.com/questions/10947180/weighted-standard-deviation-in-sql-server-without-aggregation-error
-                // !!!! fix the calculation of weighted RMS 
-                //",SQRT( SUM(Grades.weight * SQUARE(Grades.value)) / SUM(Grades.weight) - SQUARE(SUM(Grades.weight * Grades.value) / SUM(Grades.weight)) )  AS 'Weighted RMS'" +
-                ",COUNT() AS 'Grades Count'" +
-                " FROM Grades" +
-                " JOIN Students" +
-                " ON Students.idStudent=Grades.idStudent" +
-                " JOIN Classes_Students" +
-                " ON Classes_Students.idStudent=Students.idStudent" +
-                " WHERE Classes_Students.idClass =" + Class.IdClass +
-                " AND (Grades.idSchoolYear='" + Class.SchoolYear + "'" +
-                " OR Grades.idSchoolYear='" + Class.SchoolYear.Replace("-", "") + "'" +
-                ")" + 
-                " AND Grades.idGradeType = '" + IdGradeType + "'" +
-                " AND Grades.idSchoolSubject = '" + IdSchoolSubject + "'" +
-                " AND Grades.Value > 0" +
-                " AND Grades.Timestamp BETWEEN " + SqlDate(DateFrom) + " AND " + SqlDate(DateTo) +
-                " GROUP BY Students.idStudent" +
-                " ORDER BY 'Weighted average';";
+                string query = "SELECT Grades.idGrade, Students.idStudent,lastName,firstName," +
+            " SUM(Grades.value * Grades.weight)/SUM(Grades.weight) AS 'Weighted average'" +
+            // weighted RMS (Root Mean Square) as defined here: 
+            // https://stackoverflow.com/questions/10947180/weighted-standard-deviation-in-sql-server-without-aggregation-error
+            // !!!! fix the calculation of weighted RMS 
+            //",SQRT( SUM(Grades.weight * SQUARE(Grades.value)) / SUM(Grades.weight) - SQUARE(SUM(Grades.weight * Grades.value) / SUM(Grades.weight)) )  AS 'Weighted RMS'" +
+            ",COUNT() AS 'Grades Count'" +
+            " FROM Grades" +
+            " JOIN Students" +
+            " ON Students.idStudent=Grades.idStudent" +
+            " JOIN Classes_Students" +
+            " ON Classes_Students.idStudent=Students.idStudent" +
+            " WHERE Classes_Students.idClass =" + Class.IdClass +
+            " AND (Grades.idSchoolYear='" + Class.SchoolYear + "'" +
+            " OR Grades.idSchoolYear='" + Class.SchoolYear.Replace("-", "") + "'" +
+            ")" +
+            " AND Grades.idGradeType = '" + IdGradeType + "'" +
+            " AND Grades.idSchoolSubject = '" + IdSchoolSubject + "'" +
+            " AND Grades.Value > 0" +
+            " AND Grades.Timestamp BETWEEN " + SqlDate(DateFrom) + " AND " + SqlDate(DateTo) +
+            " GROUP BY Students.idStudent" +
+            " ORDER BY 'Weighted average';";
                 //" ORDER BY lastName, firstName, Students.idStudent;";
                 dAdapt = new SQLiteDataAdapter(query, (SQLiteConnection)conn);
                 dSet = new DataSet("GetUnfixedGradesInTheYear");
@@ -783,7 +782,7 @@ namespace SchoolGrades
             }
             return Grade.IdGrade;
         }
-        internal object GetGradesWeightedAveragesOfStudent(Student currentStudent, 
+        internal object GetGradesWeightedAveragesOfStudent(Student currentStudent,
             string stringKey1, string stringKey2, DateTime value1, DateTime value2)
         {
             throw new NotImplementedException();
